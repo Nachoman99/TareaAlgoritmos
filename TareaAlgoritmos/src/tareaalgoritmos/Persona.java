@@ -10,6 +10,7 @@ package tareaalgoritmos;
  * @author Nacho
  */
 public class Persona {
+    
     private int cedula;
     private String nombre;
     private int edad;
