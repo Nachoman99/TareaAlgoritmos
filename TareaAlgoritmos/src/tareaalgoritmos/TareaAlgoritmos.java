@@ -15,8 +15,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -38,8 +36,16 @@ public class TareaAlgoritmos {
         ArrayList<Persona> lista = new ArrayList<>();
         boolean salir = false;
         String ruta = "";
-        Persona[] vector = new Persona[1000000];
-        
+        Persona[] vector = null;
+        boolean ordenado = false;
+        boolean archivoCargado = false;
+        long inicio;
+        long fin;
+        long tiempo;
+//        Persona[] vectorRadix;
+//        Persona[] vectorMerge;
+//        Persona[] vectorQuick;
+
         while (!salir) {
             int opcion = Integer.parseInt(JOptionPane.showInputDialog("Digite una de las siguientes opciones: \n"
                     + "1) Cargar archivo.\n"
@@ -52,6 +58,8 @@ public class TareaAlgoritmos {
                     + "8) Salir."));
             switch (opcion) {
                 case 1:
+                    ordenado = false;
+                    archivoCargado = false;
                     ruta = "";
                     JFileChooser file = new JFileChooser();
                     file.showOpenDialog(file);
@@ -61,33 +69,107 @@ public class TareaAlgoritmos {
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
+                    archivoCargado = true;
                     break;
                 case 2:
-                    ShellSort sort = new ShellSort();
-                    vector = (Persona[]) lista.toArray();
-                    sort.shellSort(vector);
+                    if (archivoCargado && !ordenado) {
+                        vector = new Persona[lista.size()];
+                        ShellSort sort = new ShellSort();
+                        vector = (Persona[]) lista.toArray(vector);
+                        inicio = System.currentTimeMillis();
+                        sort.shellSort(vector);
+                        fin = System.currentTimeMillis();
+                        tiempo = fin - inicio;
+                        ordenado = true;
+                        JOptionPane.showMessageDialog(null, "El método shellsort ha durado: " + tiempo + " milisegundos en ordenar la lista");
+                    } else {
+                        if (ordenado) {
+                            JOptionPane.showMessageDialog(null, "La lista ya está ordenada, por favor cargue otra");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Por favor cargue un archivo antes de ordenar");
+                            ordenado = false;
+                        }
+                    }
                     break;
                 case 3:
-                    Mergesort sortM = new Mergesort();
-                    vector = (Persona[]) lista.toArray();
-                    sortM.mergeSort(vector);
-                    
+                    if (archivoCargado && !ordenado) {
+                        vector = new Persona[lista.size()];
+                        Mergesort sortM = new Mergesort();
+                        vector = (Persona[]) lista.toArray(vector);
+                        inicio = System.currentTimeMillis();
+                        sortM.mergeSort(vector);
+                        fin = System.currentTimeMillis();
+                        ordenado = true;
+                        tiempo = fin - inicio;
+                        JOptionPane.showMessageDialog(null, "El método mergeSort ha durado: " + tiempo + " milisegundos en ordenar la lista");
+                    } else {
+                        if (ordenado) {
+                            JOptionPane.showMessageDialog(null, "La lista ya está ordenada, por favor cargue otra");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Cargue un archivo antes de ordenarlo");
+                            ordenado = false;
+                        }
+                    }
                     break;
                 case 4:
-                    RapidSort sortR = new RapidSort();
-                    vector = (Persona[]) lista.toArray();
-                    
+                    if (archivoCargado && !ordenado) {
+                        vector = new Persona[lista.size()];
+                        RapidSort sortR = new RapidSort();
+                        vector = (Persona[]) lista.toArray(vector);
+                        inicio = System.currentTimeMillis();
+                        sortR.radixSort(vector);
+                        fin = System.currentTimeMillis();
+                        ordenado = true;
+                        tiempo = fin - inicio;
+                        JOptionPane.showMessageDialog(null, "El método radixsort ha durado: " + tiempo + " milisegundos en ordenar la lista");
+                    } else {
+                        if (ordenado) {
+                            JOptionPane.showMessageDialog(null, "La lista ya está ordenada, por favor cargue otra");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Cargue un archivo antes de ordenarlo");
+                            ordenado = false;
+                        }
+                    }
                     break;
                 case 5:
-                    Quicksort sortQ = new Quicksort();
-                    vector = (Persona[]) lista.toArray();
-                    
+                    if (archivoCargado && !ordenado) {
+                        vector = new Persona[lista.size()];
+                        Quicksort sortQ = new Quicksort();
+                        vector = (Persona[]) lista.toArray(vector);
+                        inicio = System.currentTimeMillis();
+                        sortQ.quickSort(vector);
+                        fin = System.currentTimeMillis();
+                        ordenado = true;
+                        tiempo = fin - inicio;
+                        JOptionPane.showMessageDialog(null, "El método quicksort ha durado: " + tiempo + " milisegundos en ordenar la lista");
+                    } else {
+                        if (ordenado) {
+                            JOptionPane.showMessageDialog(null, "La lista ya está ordenada, por favor cargue otra");
+                        } else {
+                            ordenado = false;
+                            JOptionPane.showMessageDialog(null, "Cargue un archivo antes de ordenarlo");
+                        }
+                    }
                     break;
                 case 6:
-                    
+                    if (ordenado) {
+                        BusquedaBinaria busqueda = new BusquedaBinaria();
+                        int cedula = Integer.parseInt(JOptionPane.showInputDialog("Digite la cedula de la persona a buscar"));
+                        if(busqueda.busquedaBinaria(vector, cedula) != null){
+                            JOptionPane.showMessageDialog(null, "La persona encontrada es: " + busqueda.busquedaBinaria(vector, cedula));
+                        }else{
+                            JOptionPane.showMessageDialog(null, "No se encuentra ninguna persona con esa cédula");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Primero tiene que ordenar el vector antes de poder buscar");
+                    }
                     break;
                 case 7:
-                    printArray(vector);
+                    if (archivoCargado) {
+                        printArray(vector);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Cargue un archivo primero");
+                    }
                     break;
                 case 8:
                     salir = true;
@@ -138,7 +220,6 @@ public class TareaAlgoritmos {
 //        } catch (IOException ex) {
 //            ex.printStackTrace();
 //        }
-    
     public static void printArray(Persona[] arr) {
         for (int i = 0; i < arr.length; i++) {
             System.out.print(arr[i] + " \n ");
