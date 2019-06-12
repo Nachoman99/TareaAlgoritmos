@@ -16,15 +16,15 @@ import java.util.Queue;
  */
 public class RapidSort {
 
-    public void radixSort(Persona[] unsorted) {
+    public Persona[] radixSort(Persona[] unsorted) {
         // Create a box with 10 buckets.
         Queue[] box = new Queue[unsorted.length];
         for (int i = 0; i < box.length; i++) {
             box[i] = new LinkedList<Integer>();
         }
 
-        System.out.print("Unsorted list:   ");
-        printArray(unsorted);
+//        System.out.print("Unsorted list:   ");
+//        printArray(unsorted);
         // Find the longest number in the unsorted array.
         int length = 0;
         for (int i = 0; i < unsorted.length; i++) {
@@ -53,19 +53,13 @@ public class RapidSort {
                     x++;
                 }
             }
-            System.out.print("Partly Sorted " + n + "'s: (");
-            printArray(unsorted);
+//            System.out.print("Partly Sorted " + n + "'s: (");
+//            printArray(unsorted);
             m *= 10;
             n *= 10;
         }
-        System.out.print("Sorting complete: ");
-        printArray(unsorted);
-    }
-
-    private void printArray(Persona[] arr) {
-        for (int i = 0; i < arr.length; i++) {
-            System.out.print(arr[i] + ", ");
-        }
-        System.out.println(")");
+//        System.out.print("Sorting complete: ");
+//        printArray(unsorted);
+        return unsorted;
     }
 }
