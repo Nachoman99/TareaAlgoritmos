@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import sun.security.pkcs11.P11TlsKeyMaterialGenerator;
 
 /**
  *
@@ -25,7 +26,7 @@ public class TareaAlgoritmos {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
+        
         ArrayList<Persona> lista = new ArrayList<>();
         boolean salir = false;
         String ruta = "";
@@ -118,10 +119,10 @@ public class TareaAlgoritmos {
                 case 4:
                     if (archivoCargado && !ordenadoRadix) {
                         vectorRadix = new Persona[lista.size()];
-                        RapidSort sortR = new RapidSort();
+                        RadixSort sortR = new RadixSort();
                         vectorRadix = (Persona[]) lista.toArray(vectorRadix);
                         inicio = System.currentTimeMillis();
-                        sortR.radixSort(vectorRadix);
+                        sortR.radixsort(vectorRadix);
                         fin = System.currentTimeMillis();
                         ordenadoRadix = true;
                         tiempo = fin - inicio;
