@@ -5,16 +5,13 @@
  */
 package tareaalgoritmos;
 
+import java.awt.HeadlessException;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Properties;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -24,10 +21,6 @@ import javax.swing.JOptionPane;
  */
 public class TareaAlgoritmos {
 
-    private static Properties propertie = new Properties();
-    private static FileOutputStream output;
-    private static FileInputStream input;
-
     /**
      * @param args the command line arguments
      */
@@ -36,18 +29,23 @@ public class TareaAlgoritmos {
         ArrayList<Persona> lista = new ArrayList<>();
         boolean salir = false;
         String ruta = "";
-        Persona[] vector = null;
-        boolean ordenado = false;
+        Persona[] vectorShell = null;
+        Persona[] vectorMerge = null;
+        Persona[] vectorRadix = null;
+        Persona[] vectorQuick = null;
+        boolean ordenadoMerge = false;
+        boolean ordenadoRadix = false;
+        boolean ordenadoQuick = false;
+        boolean ordenadoShell = false;
         boolean archivoCargado = false;
         long inicio;
         long fin;
         long tiempo;
-//        Persona[] vectorRadix;
-//        Persona[] vectorMerge;
-//        Persona[] vectorQuick;
+        int opcion = 0;
 
         while (!salir) {
-            int opcion = Integer.parseInt(JOptionPane.showInputDialog("Digite una de las siguientes opciones: \n"
+            try {
+                opcion = Integer.parseInt(JOptionPane.showInputDialog("Digite una de las siguientes opciones: \n"
                     + "1) Cargar archivo.\n"
                     + "2) Ordenar con Shellsort.\n"
                     + "3) Ordenar con Mergesort.\n"
@@ -56,9 +54,15 @@ public class TareaAlgoritmos {
                     + "6) Buscar una persona. \n"
                     + "7) Imprimir.\n"
                     + "8) Salir."));
+            } catch (HeadlessException | NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Digite sólo números");
+            }
             switch (opcion) {
                 case 1:
-                    ordenado = false;
+                    ordenadoRadix = false;
+                    ordenadoShell = false;
+                    ordenadoMerge = false;
+                    ordenadoQuick = false;
                     archivoCargado = false;
                     ruta = "";
                     JFileChooser file = new JFileChooser();
@@ -72,93 +76,113 @@ public class TareaAlgoritmos {
                     archivoCargado = true;
                     break;
                 case 2:
-                    if (archivoCargado && !ordenado) {
-                        vector = new Persona[lista.size()];
+                    if (archivoCargado && !ordenadoShell) {
+                        vectorShell = new Persona[lista.size()];
                         ShellSort sort = new ShellSort();
-                        vector = (Persona[]) lista.toArray(vector);
+                        vectorShell = (Persona[]) lista.toArray(vectorShell);
                         inicio = System.currentTimeMillis();
-                        sort.shellSort(vector);
+                        sort.shellSort(vectorShell);
                         fin = System.currentTimeMillis();
                         tiempo = fin - inicio;
-                        ordenado = true;
+                        ordenadoShell = true;
                         JOptionPane.showMessageDialog(null, "El método shellsort ha durado: " + tiempo + " milisegundos en ordenar la lista");
                     } else {
-                        if (ordenado) {
-                            JOptionPane.showMessageDialog(null, "La lista ya está ordenada, por favor cargue otra");
+                        if (ordenadoShell) {
+                            JOptionPane.showMessageDialog(null, "La lista ya está ordenada, por el método shellsort, por favor elija otra forma de ordenar o cargue otro archivo");
                         } else {
                             JOptionPane.showMessageDialog(null, "Por favor cargue un archivo antes de ordenar");
-                            ordenado = false;
+                            ordenadoShell = false;
                         }
                     }
                     break;
                 case 3:
-                    if (archivoCargado && !ordenado) {
-                        vector = new Persona[lista.size()];
+                    if (archivoCargado && !ordenadoMerge) {
+                        vectorMerge = new Persona[lista.size()];
                         Mergesort sortM = new Mergesort();
-                        vector = (Persona[]) lista.toArray(vector);
+                        vectorMerge = (Persona[]) lista.toArray(vectorMerge);
                         inicio = System.currentTimeMillis();
-                        sortM.mergeSort(vector);
+                        sortM.mergeSort(vectorMerge);
                         fin = System.currentTimeMillis();
-                        ordenado = true;
+                        ordenadoMerge = true;
                         tiempo = fin - inicio;
                         JOptionPane.showMessageDialog(null, "El método mergeSort ha durado: " + tiempo + " milisegundos en ordenar la lista");
                     } else {
-                        if (ordenado) {
-                            JOptionPane.showMessageDialog(null, "La lista ya está ordenada, por favor cargue otra");
+                        if (ordenadoMerge) {
+                            JOptionPane.showMessageDialog(null, "La lista ya está ordenada, con el método mergesort, por favor use otro método o cargue otro archivo");
                         } else {
                             JOptionPane.showMessageDialog(null, "Cargue un archivo antes de ordenarlo");
-                            ordenado = false;
+                            ordenadoMerge = false;
                         }
                     }
                     break;
                 case 4:
-                    if (archivoCargado && !ordenado) {
-                        vector = new Persona[lista.size()];
+                    if (archivoCargado && !ordenadoRadix) {
+                        vectorRadix = new Persona[lista.size()];
                         RapidSort sortR = new RapidSort();
-                        vector = (Persona[]) lista.toArray(vector);
+                        vectorRadix = (Persona[]) lista.toArray(vectorRadix);
                         inicio = System.currentTimeMillis();
-                        sortR.radixSort(vector);
+                        sortR.radixSort(vectorRadix);
                         fin = System.currentTimeMillis();
-                        ordenado = true;
+                        ordenadoRadix = true;
                         tiempo = fin - inicio;
                         JOptionPane.showMessageDialog(null, "El método radixsort ha durado: " + tiempo + " milisegundos en ordenar la lista");
                     } else {
-                        if (ordenado) {
-                            JOptionPane.showMessageDialog(null, "La lista ya está ordenada, por favor cargue otra");
+                        if (ordenadoRadix) {
+                            JOptionPane.showMessageDialog(null, "La lista ya está ordenada por el método radixsort, por favor utilice otro método o cargue otro archivo");
                         } else {
                             JOptionPane.showMessageDialog(null, "Cargue un archivo antes de ordenarlo");
-                            ordenado = false;
+                            ordenadoRadix = false;
                         }
                     }
                     break;
                 case 5:
-                    if (archivoCargado && !ordenado) {
-                        vector = new Persona[lista.size()];
+                    if (archivoCargado && !ordenadoQuick) {
+                        vectorQuick = new Persona[lista.size()];
                         Quicksort sortQ = new Quicksort();
-                        vector = (Persona[]) lista.toArray(vector);
+                        vectorQuick = (Persona[]) lista.toArray(vectorQuick);
                         inicio = System.currentTimeMillis();
-                        sortQ.quickSort(vector);
+                        sortQ.quickSort(vectorQuick);
                         fin = System.currentTimeMillis();
-                        ordenado = true;
+                        ordenadoQuick = true;
                         tiempo = fin - inicio;
                         JOptionPane.showMessageDialog(null, "El método quicksort ha durado: " + tiempo + " milisegundos en ordenar la lista");
                     } else {
-                        if (ordenado) {
-                            JOptionPane.showMessageDialog(null, "La lista ya está ordenada, por favor cargue otra");
+                        if (ordenadoQuick) {
+                            JOptionPane.showMessageDialog(null, "La lista ya está ordenada por el metodo quicksort, por favor use otro método o cargue otro archivo");
                         } else {
-                            ordenado = false;
+                            ordenadoQuick = false;
                             JOptionPane.showMessageDialog(null, "Cargue un archivo antes de ordenarlo");
                         }
                     }
                     break;
                 case 6:
-                    if (ordenado) {
+                    if (ordenadoQuick || ordenadoMerge || ordenadoRadix || ordenadoShell) {
                         BusquedaBinaria busqueda = new BusquedaBinaria();
                         int cedula = Integer.parseInt(JOptionPane.showInputDialog("Digite la cedula de la persona a buscar"));
-                        if(busqueda.busquedaBinaria(vector, cedula) != null){
-                            JOptionPane.showMessageDialog(null, "La persona encontrada es: " + busqueda.busquedaBinaria(vector, cedula));
-                        }else{
-                            JOptionPane.showMessageDialog(null, "No se encuentra ninguna persona con esa cédula");
+                        if (ordenadoQuick) {
+                            if (busqueda.busquedaBinaria(vectorShell, cedula) != null) {
+                                JOptionPane.showMessageDialog(null, "La persona encontrada es: " + busqueda.busquedaBinaria(vectorQuick, cedula));
+                            } else {
+                                JOptionPane.showMessageDialog(null, "No se encuentra ninguna persona con esa cédula");
+                            }
+                        } else if (ordenadoRadix) {
+                            if (busqueda.busquedaBinaria(vectorShell, cedula) != null) {
+                                JOptionPane.showMessageDialog(null, "La persona encontrada es: " + busqueda.busquedaBinaria(vectorRadix, cedula));
+                            } else {
+                                JOptionPane.showMessageDialog(null, "No se encuentra ninguna persona con esa cédula");
+                            }
+                        } else if (ordenadoShell) {
+                            if (busqueda.busquedaBinaria(vectorShell, cedula) != null) {
+                                JOptionPane.showMessageDialog(null, "La persona encontrada es: " + busqueda.busquedaBinaria(vectorShell, cedula));
+                            } else {
+                                JOptionPane.showMessageDialog(null, "No se encuentra ninguna persona con esa cédula");
+                            }
+                        } else if (ordenadoMerge) {
+                            if (busqueda.busquedaBinaria(vectorShell, cedula) != null) {
+                                JOptionPane.showMessageDialog(null, "La persona encontrada es: " + busqueda.busquedaBinaria(vectorMerge, cedula));
+                            } else {
+                                JOptionPane.showMessageDialog(null, "No se encuentra ninguna persona con esa cédula");
+                            }
                         }
                     } else {
                         JOptionPane.showMessageDialog(null, "Primero tiene que ordenar el vector antes de poder buscar");
@@ -166,7 +190,33 @@ public class TareaAlgoritmos {
                     break;
                 case 7:
                     if (archivoCargado) {
-                        printArray(vector);
+                        int imprimir = 0;
+                        try {
+                            imprimir = Integer.parseInt(JOptionPane.showInputDialog("Digite uno de las siguientes opciones\n"
+                                    + "1) Imprimir con radixsort.\n"
+                                    + "2) Imprimir con quicksort.\n"
+                                    + "3) Imprimir con mergesort.\n"
+                                    + "4) Imprimir con shellsort"));
+                        } catch (NumberFormatException e) {
+                            JOptionPane.showMessageDialog(null, "Digite sólo números");
+                        }
+                        switch(imprimir){
+                            case 1:
+                                printArray(vectorRadix);
+                                break;
+                            case 2:
+                                printArray(vectorQuick);
+                                break;
+                            case 3:
+                                printArray(vectorMerge);
+                                break;
+                            case 4: 
+                                printArray(vectorShell);
+                                break;
+                            default:
+                                JOptionPane.showMessageDialog(null, "Elija una opción válida");
+                                break;
+                        }
                     } else {
                         JOptionPane.showMessageDialog(null, "Cargue un archivo primero");
                     }
@@ -203,23 +253,6 @@ public class TareaAlgoritmos {
         return list;
     }
 
-    //            Quicksort quick = new Quicksort();
-//            Mergesort merge = new Mergesort();
-//        RapidSort sort = new RapidSort();
-//        Persona[] vc = new Persona[200000];
-//        Persona[] ordenado = new Persona[200000];
-//        try {
-//            ArrayList<Persona> list = leerArchivo();
-//            for (int i = 0; i < list.size(); i++) {
-//                vc[i] = list.get(i);
-//            }
-//            merge.mergeSort(vc);
-//            //quick.quickSort(vc);
-//            //ordenado = sort.radixSort(vc);
-//            sort.printArray(vc);
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//        }
     public static void printArray(Persona[] arr) {
         for (int i = 0; i < arr.length; i++) {
             System.out.print(arr[i] + " \n ");
