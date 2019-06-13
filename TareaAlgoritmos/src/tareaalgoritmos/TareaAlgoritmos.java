@@ -202,16 +202,32 @@ public class TareaAlgoritmos {
                         }
                         switch(imprimir){
                             case 1:
-                                printArray(vectorRadix);
+                                if (vectorRadix != null) {
+                                    printArray(vectorRadix);
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Primero ordene la lista con el método radixsort");
+                                }
                                 break;
                             case 2:
-                                printArray(vectorQuick);
+                                if (vectorQuick != null) {
+                                    printArray(vectorQuick);
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Primero ordene la lista con el método quicksort");
+                                }
                                 break;
                             case 3:
-                                printArray(vectorMerge);
+                                if (vectorMerge != null) {
+                                    printArray(vectorMerge);
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Primero ordene la lista con el método mergesort");
+                                }
                                 break;
                             case 4: 
-                                printArray(vectorShell);
+                                if (vectorShell != null) {
+                                    printArray(vectorShell);
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Primero ordene la lista con el método shellsort");
+                                }
                                 break;
                             default:
                                 JOptionPane.showMessageDialog(null, "Elija una opción válida");
