@@ -18,8 +18,8 @@ public class ShellSort {
                 int j = i;
                 for ( ; j >= gap && tmp.getCedula() < a[j - gap].getCedula(); j -= gap) {
                     a[j] = a[j - gap];
-                    a[j] = tmp;
                 }
+                a[j] = tmp;
             }
         }
     }

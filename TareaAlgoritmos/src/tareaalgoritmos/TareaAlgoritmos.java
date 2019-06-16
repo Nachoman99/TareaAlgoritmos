@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import sun.security.pkcs11.P11TlsKeyMaterialGenerator;
 
 /**
  *

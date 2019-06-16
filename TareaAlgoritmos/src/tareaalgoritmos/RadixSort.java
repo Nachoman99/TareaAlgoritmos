@@ -13,8 +13,7 @@ import java.util.Arrays;
  */
 public class RadixSort {
 
-     static Persona getMax(Persona[] arr) 
-    { 
+    private Persona getMax(Persona[] arr){ 
         Persona mx = arr[0]; 
         for (int i = 1; i < arr.length; i++) 
             if (arr[i].getCedula() > mx.getCedula()) 
@@ -22,8 +21,7 @@ public class RadixSort {
         return mx; 
     } 
  
-    static void countSort(Persona[] arr, int exp) 
-    { 
+    private void countSort(Persona[] arr, int exp){ 
         Persona[] output = new Persona[arr.length]; 
         int i; 
         int count[] = new int[10]; 
@@ -42,8 +40,7 @@ public class RadixSort {
         for (i = 0; i < arr.length; i++) 
             arr[i] = output[i]; 
     } 
-    static void radixsort(Persona[] arr) 
-    { 
+    public void radixsort(Persona[] arr){ 
         Persona m = getMax(arr);  
         for (int exp = 1; m.getCedula()/exp > 0; exp *= 10) 
             countSort(arr, exp); 
