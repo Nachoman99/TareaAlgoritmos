@@ -1,29 +1,44 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tareaalgoritmos;
 
 /**
+ * En esta clase se implementa el método quicksort
  *
- * @author Nacho
+ * @author Jose Ignacio Zamora
  */
 public class Quicksort {
 
     private static final int CUTOFF = 10;
 
-    public static void quickSort(Persona[] lista) {
+    /**
+     * Este método llama al quickSort privado
+     *
+     * @param lista vector a ordenar
+     */
+    public void quickSort(Persona[] lista) {
         quickSort(lista, 0, lista.length - 1);
     }
 
-    private static void swapReferences(Persona[] lista, int x, int y) {
+    /**
+     * Este método cambia de posición a las Personas dentro del vector
+     *
+     * @param lista vector a ordenar
+     * @param x una posición del vector
+     * @param y una posición del vector
+     */
+    private void swapReferences(Persona[] lista, int x, int y) {
         Persona temp = lista[x];
         lista[x] = lista[y];
         lista[y] = temp;
     }
 
-    private static void insertionSort(Persona[] lista, int low, int high) {
+    /**
+     * Este método va insertando ordenado dentro del vector
+     *
+     * @param lista vector a ordenar
+     * @param low valor más bajo
+     * @param high valor más alto
+     */
+    private void insertionSort(Persona[] lista, int low, int high) {
         for (int i = low + 1; i <= high; i++) {
             Persona tmp = lista[i];
             int j;
@@ -35,7 +50,14 @@ public class Quicksort {
         }
     }
 
-    private static void quickSort(Persona[] lista, int low, int high) {
+    /**
+     * Va ordenando el vector
+     *
+     * @param lista vector a ordenar
+     * @param low valor más bajo
+     * @param high valor más alto
+     */
+    private void quickSort(Persona[] lista, int low, int high) {
         if (low + CUTOFF > high) {
             insertionSort(lista, low, high);
         } else {
@@ -43,10 +65,10 @@ public class Quicksort {
             if (lista[middle].getCedula() < lista[low].getCedula()) {
                 swapReferences(lista, low, middle);
             }
-            if (lista[high].getCedula()< lista[low].getCedula()) {
+            if (lista[high].getCedula() < lista[low].getCedula()) {
                 swapReferences(lista, low, high);
             }
-            if (lista[high].getCedula()<lista[middle].getCedula()) {
+            if (lista[high].getCedula() < lista[middle].getCedula()) {
                 swapReferences(lista, middle, high);
             }
 
@@ -55,9 +77,9 @@ public class Quicksort {
 
             int i, j;
             for (i = low, j = high - 1;;) {
-                while (lista[++i].getCedula()<pivot.getCedula())
+                while (lista[++i].getCedula() < pivot.getCedula())
           ;
-                while (pivot.getCedula()< lista[--j].getCedula())
+                while (pivot.getCedula() < lista[--j].getCedula())
           ;
                 if (i >= j) {
                     break;
@@ -69,12 +91,5 @@ public class Quicksort {
             quickSort(lista, low, i - 1);
             quickSort(lista, i + 1, high);
         }
-    }
-    
-    public void printArray(Persona[] arr) {
-        for (int i = 0; i < arr.length; i++) {
-            System.out.print(arr[i] + "\n");
-        }
-        System.out.println(")");
     }
 }

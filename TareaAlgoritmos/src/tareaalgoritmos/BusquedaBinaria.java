@@ -1,17 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tareaalgoritmos;
 
 /**
+ * En esta clase se implementa el método de busqueda binaria
  *
- * @author Nacho
+ * @author Kevin Trejos
  */
 public class BusquedaBinaria {
 
-    public static Persona busquedaBinaria(Persona[] vector, int dato) {
+    /**
+     * Este método es el de busqueda binaria
+     *
+     * @param vector Un vector de personas
+     * @param dato numero de cédula a buscar
+     * @return La persona con el número de cédula encontrado, null si no
+     * encuentra la persona asociada a ese número de cédula
+     */
+    public Persona busquedaBinaria(Persona[] vector, int dato) {
         int n = vector.length;
         int centro, inf = 0, sup = n - 1;
         while (inf <= sup) {

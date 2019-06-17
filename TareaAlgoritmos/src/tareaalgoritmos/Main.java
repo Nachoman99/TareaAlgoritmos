@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tareaalgoritmos;
 
 import java.awt.HeadlessException;
@@ -16,16 +11,16 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author Nacho
+ * Esta es la clase para las pruebas
+ * @author Jose Ignacio Zamora
  */
-public class TareaAlgoritmos {
+public class Main {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
+
         ArrayList<Persona> lista = new ArrayList<>();
         boolean salir = false;
         String ruta = "";
@@ -42,18 +37,17 @@ public class TareaAlgoritmos {
         long fin;
         long tiempo;
         int opcion = 0;
-
         while (!salir) {
             try {
                 opcion = Integer.parseInt(JOptionPane.showInputDialog("Digite una de las siguientes opciones: \n"
-                    + "1) Cargar archivo.\n"
-                    + "2) Ordenar con Shellsort.\n"
-                    + "3) Ordenar con Mergesort.\n"
-                    + "4) Ordenar con Radixsort.\n"
-                    + "5) Ordenar con Quicksort.\n"
-                    + "6) Buscar una persona. \n"
-                    + "7) Imprimir.\n"
-                    + "8) Salir."));
+                        + "1) Cargar archivo.\n"
+                        + "2) Ordenar con Shellsort.\n"
+                        + "3) Ordenar con Mergesort.\n"
+                        + "4) Ordenar con Radixsort.\n"
+                        + "5) Ordenar con Quicksort.\n"
+                        + "6) Buscar una persona. \n"
+                        + "7) Imprimir.\n"
+                        + "8) Salir."));
             } catch (HeadlessException | NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Digite sólo números");
             }
@@ -200,31 +194,31 @@ public class TareaAlgoritmos {
                         } catch (NumberFormatException e) {
                             JOptionPane.showMessageDialog(null, "Digite sólo números");
                         }
-                        switch(imprimir){
+                        switch (imprimir) {
                             case 1:
                                 if (vectorRadix != null) {
-                                    printArray(vectorRadix);
+                                    System.out.println(printArray(vectorRadix));
                                 } else {
                                     JOptionPane.showMessageDialog(null, "Primero ordene la lista con el método radixsort");
                                 }
                                 break;
                             case 2:
                                 if (vectorQuick != null) {
-                                    printArray(vectorQuick);
+                                    System.out.println(printArray(vectorQuick));
                                 } else {
                                     JOptionPane.showMessageDialog(null, "Primero ordene la lista con el método quicksort");
                                 }
                                 break;
                             case 3:
                                 if (vectorMerge != null) {
-                                    printArray(vectorMerge);
+                                    System.out.println(printArray(vectorMerge));
                                 } else {
                                     JOptionPane.showMessageDialog(null, "Primero ordene la lista con el método mergesort");
                                 }
                                 break;
-                            case 4: 
+                            case 4:
                                 if (vectorShell != null) {
-                                    printArray(vectorShell);
+                                    System.out.println(printArray(vectorShell));
                                 } else {
                                     JOptionPane.showMessageDialog(null, "Primero ordene la lista con el método shellsort");
                                 }
@@ -246,9 +240,16 @@ public class TareaAlgoritmos {
                     break;
             }
         }
-
     }
 
+    /**
+     * Este método se encarga de leer los archivos txt
+     *
+     * @param ruta es la ruta donde se encuentra el archivo
+     * @return un arrayList con todos los valores del archivo
+     * @throws FileNotFoundException si no encuentra el archivo
+     * @throws IOException si hay algún error en las entradas/salidas
+     */
     public static ArrayList leerArchivo(String ruta) throws FileNotFoundException, IOException {
         ArrayList<Persona> list = new ArrayList<>();
         File file = new File(ruta);
@@ -269,10 +270,17 @@ public class TareaAlgoritmos {
         return list;
     }
 
-    public static void printArray(Persona[] arr) {
+    /**
+     * Este método imprime un vector
+     *
+     * @param arr vector a imprimir
+     * @return los valores dentro del vector
+     */
+    public static String printArray(Persona[] arr) {
+        String str = "";
         for (int i = 0; i < arr.length; i++) {
-            System.out.print(arr[i] + " \n ");
+            str += arr[i] + "\n";
         }
-        System.out.println(")");
+        return str;
     }
 }
